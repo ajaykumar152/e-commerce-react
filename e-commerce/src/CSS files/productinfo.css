@@ -1,0 +1,143 @@
+.productinfopage-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: lightgreen;
+  height: 30px;
+  padding: 20px;
+  position: fixed;
+  top: 0;
+  width: 98%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.header-right-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 300px;
+}
+
+.productinfo-box {
+  display: flex;
+  gap: 40px;
+  max-width: 1000px;
+  border-radius: 10px;
+  height: auto;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+  margin-top: 100px;
+  margin-left: 40px;
+  padding: 30px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.productinfo-product{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  row-gap: 10px;
+  align-items: center;
+}
+
+.productdesc-sec {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.bottom-productlist {
+  display:flex;
+  padding:20px;
+  column-gap:20px;
+  flex-wrap: wrap;
+}
+
+.bottom-product {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  box-shadow:0 0 0 1px rgba(0, 0, 0, 0.1);
+  border-radius:10px;
+  row-gap:10px;
+  width:300px;
+  height:300px;
+  padding:20px;
+}
+
+.info-buttons {
+  display: flex;
+  column-gap: 40px;
+}
+
+.cart-img {
+  height: 25px;
+  width: 25px;
+}
+
+.info-cart-button {
+  width: 40%;
+  background-color: yellow;
+  padding: 12px 0px;
+  align-items: center;
+  text-align: center;
+  border-radius: 20px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.info-buy-button {
+  width: 30%;
+  background-color: rgb(36, 172, 246);
+  padding: 12px 0px;
+  align-items: center;
+  text-align: center;
+  border-radius: 20px;
+  border: none;
+  font-size: 16px;
+  color: white;
+  cursor: pointer; 
+}
+
+.added {
+  font-size: 15px;
+  color: green;
+  font-weight: 500;
+  margin-top: 40px;
+  margin-left: 20px;
+  margin-bottom: 3px;
+}
+
+.product-info-button {
+  width:200px;
+  padding: 10px;
+  background-color:yellow;
+  font-size:15px;
+  border:none;
+  border-radius:3px;
+  cursor:pointer;
+}
+
+.more-button {
+  position:fixed;
+  bottom:20px;
+  right:10px;
+  width:100px;
+  padding:10px;
+  background-color:lightgreen;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+  border:none;
+  font-size:15px;
+  color:blue;
+  border-radius:3px;
+  cursor:pointer;
+}
+
+.productinfopage-blur {
+  filter: blur(1.5px);
+  position: fixed;
+  pointer-events: none;
+}
