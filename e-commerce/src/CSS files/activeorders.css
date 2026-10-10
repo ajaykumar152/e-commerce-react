@@ -1,0 +1,163 @@
+.active-order-list {
+  display:flex;
+  column-gap:30px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 25px;
+}
+
+.main-header {
+  display: flex;
+  flex-direction: row;
+  column-gap: 20px;
+}
+
+.active-order {
+  margin-left:40px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+  border-radius:10px;
+  width:850px;
+  margin-left: 250px;
+  padding: 25px;
+  margin-top: 100px;
+  background-color: rgb(254, 252, 252);
+}
+
+.side-bar {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  width: 200px;
+  bottom: 0;
+  top: 0;
+  border-right: 1px solid black;
+  justify-content: space-between;
+  background-color: rgb(241, 238, 238);
+  padding: 10px 0;
+}
+
+.active-order-product {
+  display:flex;
+  flex-direction:column;
+  justify-content: space-between;
+  padding: 1px 0px;
+}
+
+.product-details {
+  display: flex;
+  flex-direction: column;
+  row-gap: 4px;
+}
+
+.order-buttons {
+  display: flex;
+  column-gap: 20px;
+}
+
+.order-buttons button {
+  padding: 12px 15px;
+  width: 170px;
+  text-align: center;
+  border: none;
+  background-color: aqua;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.side-bar hr {
+  width: 100%;
+}
+
+.side-bar p {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.track-package-button {
+  padding: 12px 18px;
+  border: none;
+  background-color: yellow;
+  border-radius: 3px;
+  width: 150px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.active-order-search-box {
+  width: 500px;
+  padding: 12px 15px;
+  font-size: 16px;
+}
+
+.search-filter-header {
+  display: flex;
+  max-width: 1000px;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 30px;
+  left: 250px;
+  column-gap: 30px;
+}
+
+.search-filter-header span {
+  box-shadow: 0 0 0 0.6px rgba(0, 0, 0, 0.1);
+  padding: 12px;
+  width: 100px;
+  text-align: center;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.order-tracking {
+  position: fixed;
+  top: 40%;
+  left: 40%;
+  box-shadow: 0 0 0 0.6px rgba(0, 0, 0, 0.1);
+  background-color: skyblue;
+  padding: 20px;
+  border-radius: 5px;
+  width: 500px;
+}
+
+.order-position {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.order-tracker {
+  width: 500px;
+  height: 13px;
+  border: 2px solid black;
+  border-radius: 10px;
+}
+
+.order-tracker div {
+  height: 13px;
+  background-color: green;
+  transition: width 1s ease-out;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.order-tracking button {
+  margin-top: 10px;
+  padding: 10px 12px;
+  width: 70px;
+  background-color: yellow;
+  border: none;
+  border-radius: 3px;
+  font-size: 16px;
+  color: black;
+  font-weight: 500px;
+  cursor: pointer;
+}
+
+#main-header-blur {
+  pointer-events: none;
+  filter: blur(2px);
+  position: fixed;
+}

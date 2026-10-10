@@ -1,0 +1,95 @@
+#text {
+  align-items: flex-start;
+}
+.register-form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  width: 380px;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-left: auto;
+  margin-top: 10%;
+  margin-right: auto;
+  align-items: center;
+  height: 420px;
+  box-shadow: 0  0 0 1px rgba(0, 0, 0, 0.1);
+  justify-content: center;
+  border-radius: 12px;
+  padding: 15px;
+}
+.login-form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  width: 350px;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-left: auto;
+  margin-top: 10%;
+  margin-right: auto;
+  align-items: center;
+  height: 350px;
+  box-shadow: 0  0 0 1px rgba(0, 0, 0, 0.1);
+  justify-content: center;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.login-header {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  width: 300px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+  padding: 6px;
+  border-radius: 20px;
+  background-color: rgb(240, 240, 240);
+}
+
+input {
+  width: 250px;
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 6px;
+}
+
+.login-button {
+  width: 80px;
+  padding: 10px;
+  font-size: 15px;
+  background-color: rgb(47, 228, 252);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.customer, .admin-in{
+  width: 50%;
+  align-items: center;
+  background-color: white;
+  padding: 5px 7px;
+  border-radius:15px; 
+  cursor: pointer;
+}
+
+.admin, .customer-in{
+  width: 50%;
+  align-items: center;
+  padding: 5px 7px;
+  cursor: pointer;
+}
+
+.inlogin-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 300px;
+}
+
+.under-text {
+  display: none;
+  font-size: 12px;
+}
+
+.username-box:focus + .under-text {
+  display: inline;
+}
