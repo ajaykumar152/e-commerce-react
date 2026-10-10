@@ -21,9 +21,15 @@ export function ProductInfo() {
           <h2>Explore Product features</h2>
           <input type='text' placeholder='Search for an item' className='search-box' />
           <div className='header-right-section'>
+<<<<<<< HEAD
             <span style={{cursor:'pointer'}} onClick={() => navigate('/CustomerProfile')}>UserName</span>
             <img src={cart} className='cart-img' onClick={() => navigate('/Cart')} style={{cursor:'pointer'}}></img>
             <span style={{cursor:'pointer'}}>LogOut</span>
+=======
+            <span>UserName</span>
+            <img src={cart} className='cart-img' onClick={() => navigate('/Cart')}></img>
+            <span>LogOut</span>
+>>>>>>> 836018b4d07c7c4303962ae502090f48e4ca93ca
           </div>
         </div>
         <div className='productinfo-box'>

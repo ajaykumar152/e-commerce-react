@@ -22,7 +22,10 @@ export function App() {
         <Route path='/AdminRegisterPage' element={<AdminRegisterPage />} />
       </Routes>
     </BrowserRouter>
+<<<<<<< HEAD
     */
+=======
+>>>>>>> 836018b4d07c7c4303962ae502090f48e4ca93ca
   
    
     <BrowserRouter>
@@ -30,10 +33,13 @@ export function App() {
         <Route path='/' element={<ProductsPage />} />
         <Route path='/Cart' element={<Cart />} />
         <Route path='/ProductInfo' element={<ProductInfo />} />
+<<<<<<< HEAD
         <Route path='/CustomerProfile' element={<CustomerProfile />} />
         <Route path='/CustomerProfile-ActiveOrders' element={<ActiveOrders />} />
         <Route path='/CustomerProfile-OrderHistory' element={<OrderHistory />} />
         <Route path='/ActiveOrderList' element={<ActiveOrderList />} />
+=======
+>>>>>>> 836018b4d07c7c4303962ae502090f48e4ca93ca
       </Routes>
     </BrowserRouter>
     
@@ -44,9 +50,16 @@ export function App() {
       <Route path='/CustomerProfile-ActiveOrders' element={<ActiveOrders />} />
       <Route path='/CustomerProfile-OrderHistory' element={<OrderHistory />} />
     </Routes>
+<<<<<<< HEAD
    </BrowserRouter> 
    <ActiveOrderList />
    */
+=======
+   </BrowserRouter>
+   */
+    
+   <ActiveOrderList />
+>>>>>>> 836018b4d07c7c4303962ae502090f48e4ca93ca
   );  
 }
 
