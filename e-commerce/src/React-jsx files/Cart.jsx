@@ -2,7 +2,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { BuyProduct, PaymentOption, PayTypeUPI, PayTypeCard, PayTypeDelivery, OrderSucessfull } from './BuyProduct';
-import '../CSS files/cart.css'
+import '../CSS files/cart.css';
+import { api_url } from './BackendApi';
 
 export function Cart() {
   const [buy, setBuy] = useState(false);
@@ -53,7 +54,7 @@ function GetCartProducts({ buy, buyCart }) {
   useEffect(() => { 
     try {
       async function fetch() {
-        const response = await axios.get('http://localhost:9090/cart/products', { 
+        const response = await axios.get(`${api_url}`+'/products', { 
           params: {
             user:"ajaykumar",
             page:0,
@@ -118,7 +119,7 @@ function PlusOneQuantity(id, products, setProducts) {
 
   try {
     async function fetch() {
-      await axios.put('http://localhost:9090/cart/add', null, {
+      await axios.put(`${api_url}`+'/cart/add', null, {
         params: {
           user:"ajaykumar",
           productId:id
@@ -149,7 +150,7 @@ async function MinusOneQuantity(id, products, setProducts) {
   }
 
   try {
-    await axios.put('http://localhost:9090/cart/sub', null, {
+    await axios.put(`${api_url}`+'/cart/sub', null, {
       params: {
         user:'ajaykumar',
         productId:id

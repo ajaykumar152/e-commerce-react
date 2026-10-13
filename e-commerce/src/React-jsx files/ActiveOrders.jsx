@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../CSS files/activeorders.css';
 import { useNavigate } from 'react-router-dom';
+import { api_url } from './BackendApi';
 
 export function ActiveOrderList() {
   const [tracker, setTracker] = useState(false);
@@ -40,7 +41,7 @@ function GetActiveOrderProducts({ tracker, date }) {
 
   useEffect(() => {
     async function fetch() {
-      const output = await axios.get('http://localhost:9090/order', {
+      const output = await axios.get(`${api_url}`+'/order', {
         params: {
           username:'ajaykumar'
         }

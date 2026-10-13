@@ -4,6 +4,7 @@ import axios from 'axios';
 import cart from '../assets/cart.jpeg';
 import '../CSS files/productpage.css';
 import { BuyProduct, PaymentOption, PayTypeUPI, PayTypeCard, PayTypeDelivery, OrderSucessfull } from './BuyProduct';
+import { api_url } from './BackendApi';
 
 export function ProductsPage() {
   const [image, setImage] = useState(null);
@@ -67,35 +68,47 @@ function GetAllProducts({ buy }) {
   const[products, setProducts] = useState([]);
   
   useEffect(() => {
-    async function fetch() {
-
-      const response = await axios.get('http://localhost:9090/product/get', {
-        params: {
-          page:0,
-          size:10
+  async function fetchProducts() {
+    try {
+      const response = await axios.get(
+        `${api_url}`+'/product/get',
+        {
+          params: {
+            page: 0,
+            size: 10
+          }
         }
-      });
-      setProducts(response.data.content);
+      );
+
+      // Handle both Spring Page object (response.data.content) and raw Array (response.data)
+      const productList = response.data.content || response.data;
+      setProducts(productList);
+    } catch (error) {
+      console.error('API Call Failed:', error.response?.status, error.response?.data || error.message);
     }
-    fetch();
-  }, []);
+  }
+
+  fetchProducts();
+}, []);
   
-  return (
-    <> {
-      products.map((product) => {
-        return (<div key ={product.id} className='product'>
-          <img src={product.productLink} />
-          <span>{product.productName}</span>
-          <span>${product.price}\-</span>
-          <div className='productpage-buttons'>
-            <button className='productinfo-button' onClick={() => ProductDesc(product, navigate)}>ProductInfo</button>
-            <button className='buy-button' onClick={() => StoreDetails(buy, product.id)}>Buy</button>
-          </div>
-        </div>);
-      })
-    }</>
-  );
-}
+  if(products !== null) {
+      return (
+        <> {
+          products.map((product) => {
+            return (<div key ={product.id} className='product'>
+              <img src={product.productLink} />
+              <span>{product.productName}</span>
+              <span>${product.price}\-</span>
+              <div className='productpage-buttons'>
+                <button className='productinfo-button' onClick={() => ProductDesc(product, navigate)}>ProductInfo</button>
+                <button className='buy-button' onClick={() => StoreDetails(buy, product.id)}>Buy</button>
+              </div>
+            </div>);
+          })
+        }</>
+      );
+    }
+  }
 
 function StoreDetails(buy, id) {
   localStorage.setItem('orderedProductId', id);
@@ -112,7 +125,7 @@ async function AddProduct(image, productName, productPrice) {
   formData.append("image", image);
 
   try {
-    await axios.post("http://localhost:9090/product", formData);
+    await axios.post( `${api_url}`+"/product", formData);
   } catch {
     console.log("not added");
   }

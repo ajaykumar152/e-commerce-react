@@ -1,0 +1,1 @@
+export const api_url = "https://effective-adventure-r4r677446qvv355gq-9090.app.github.dev";

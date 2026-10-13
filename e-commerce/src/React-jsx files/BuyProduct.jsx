@@ -2,6 +2,7 @@ import { useState } from 'react';
 import '../CSS files/buyproduct.css';
 import QR from '../assets/QR-code.svg';
 import axios from 'axios';
+import { api_url } from './BackendApi';
 import tick from '../assets/tick-mark.jpg';
 
 export function BuyProduct({ buy, pay }) {
@@ -51,7 +52,7 @@ export function PaymentOption({ pay, payUPI, payCard, payOnDelivery }) {
       <hr />
       <span onClick={() => {pay(false), payOnDelivery(true)}}>Pay on Delivery</span>
       <br></br>
-      <button onClick = {() => {pay(false), RemoveDetails()} } className='buy-buttons' onClick={() => {pay(false), RemoveDetails()}}>Cancel</button>
+      <button onClick = {() => {pay(false), RemoveDetails()} } className='buy-buttons'>Cancel</button>
     </div>
   );
 }
@@ -149,13 +150,13 @@ async function OrderProduct(payOver, orderPlaced, buyCart) {
   const { id, ...orderedData} = body;
 
   if(!buyCart){  
-    const data = await axios.post(`http://localhost:9090/order/${username}`, orderedData);
+    const data = await axios.post(`${api_url}`+`/order/${username}`, orderedData);
     if(data.data) {  
       payOver(false);
       orderPlaced(true);
     }
   } else {
-    const data = await axios.post(`http://localhost:9090/order/products/${username}`, orderedData)
+    const data = await axios.post(`${api_url}`+`/order/products/${username}`, orderedData)
     if(data.data) {
       payOver(false);
       orderPlaced(true);

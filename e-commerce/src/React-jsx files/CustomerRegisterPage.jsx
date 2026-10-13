@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import '../CSS files/loginpage.css'
 import axios from 'axios';
+import { api_url } from './BackendApi';
 
 export function CustomerRegisterPage() {
   const navigate = useNavigate();
@@ -62,7 +63,7 @@ async function IsValidInput(username, email, phone, password) {
     alert('enter valid password');
   } else {
     try {
-      const added = await axios.post('http://localhost:9090/customer', {
+      const added = await axios.post(`${api_url}`+'/customer', {
         username:username,
         email:email,
         phone:phone,

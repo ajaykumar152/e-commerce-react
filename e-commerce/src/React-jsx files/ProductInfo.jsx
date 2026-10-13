@@ -4,6 +4,7 @@ import { BuyProduct, PaymentOption, PayTypeUPI, PayTypeCard, PayTypeDelivery, Or
 import '../CSS files/productinfo.css';
 import cart from '../assets/cart.jpeg';
 import { useEffect, useState } from 'react';
+import { api_url } from './BackendApi';
 
 export function ProductInfo() {
   const navigate = useNavigate();
@@ -21,15 +22,9 @@ export function ProductInfo() {
           <h2>Explore Product features</h2>
           <input type='text' placeholder='Search for an item' className='search-box' />
           <div className='header-right-section'>
-<<<<<<< HEAD
             <span style={{cursor:'pointer'}} onClick={() => navigate('/CustomerProfile')}>UserName</span>
             <img src={cart} className='cart-img' onClick={() => navigate('/Cart')} style={{cursor:'pointer'}}></img>
             <span style={{cursor:'pointer'}}>LogOut</span>
-=======
-            <span>UserName</span>
-            <img src={cart} className='cart-img' onClick={() => navigate('/Cart')}></img>
-            <span>LogOut</span>
->>>>>>> 836018b4d07c7c4303962ae502090f48e4ca93ca
           </div>
         </div>
         <div className='productinfo-box'>
@@ -63,7 +58,7 @@ function GetProductDesc({ buy }) {
 
   useEffect(() => {
     async function fetch() {
-      const data = await axios.get('http://localhost:9090/info', {
+      const data = await axios.get(`${api_url}`+'/info', {
         params: {
           productId:product.id
         }
@@ -102,7 +97,7 @@ async function AddToCartItems(id, setMsg) {
   }, 1000);
 
   try {
-      await axios.post('http://localhost:9090/cart', null, { 
+      await axios.post(`${api_url}`+'/cart', null, { 
         params: {
           user:"ajaykumar",
           productId:id,
@@ -119,7 +114,7 @@ function GetProducts() {
 
   useEffect(() => {
     async function fetch() {
-      const data = await axios.get('http://localhost:9090/info/products');
+      const data = await axios.get(`${api_url}`+'/info/products');
       setProducts(data.data);
     }
     fetch();

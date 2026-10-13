@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
-import '../CSS files/loginpage.css'
+import '../CSS files/loginpage.css';
+import { api_url } from './BackendApi';
 
 export function AdminRegisterPage() {
   const navigate = useNavigate();
@@ -62,7 +63,7 @@ async function IsValidInput(username, email, phone, password) {
     alert('enter valid password');
   } else {
     try {
-      const added = await axios.post('http://localhost:9090/admin', {
+      const added = await axios.post(`${api_url}`+'/admin', {
         username:username,
         email:email,
         phone:phone,
