@@ -1,1 +1,1 @@
-export const api_url = "https://effective-adventure-r4r677446qvv355gq-9090.app.github.dev";
+export const api_url = "https://studious-spork-wr95vvrr5jq735qqj-9090.app.github.dev";

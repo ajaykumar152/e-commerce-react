@@ -16,7 +16,7 @@ export function CustomerProfile() {
             <hr />
             <p onClick={() => navigate('/ActiveOrderList')} style={{cursor:'pointer'}}>Active Orders</p>
             <hr />
-            <p onClick={() => navigate('/CustomerProfile-OrderHistory')} style={{cursor:'pointer'}}>Order Hisotry</p>
+            <p onClick={() => navigate('/OrderHistoryList')} style={{cursor:'pointer'}}>Order History</p>
           </div>         
           <p style={{cursor:'pointer'}}>Logout</p>
         </div>

@@ -8,6 +8,9 @@ export function ActiveOrderList() {
   const [tracker, setTracker] = useState(false);
   const [date, setDate] = useState('');
   const navigate = useNavigate();
+  const [confirmCancellation, setConfirmCancellation] = useState(false);
+  const [orderId, setOrderId] = useState(0);
+  const [cancelled, setCancelled] = useState(false);
 
   return (
     <>
@@ -17,7 +20,7 @@ export function ActiveOrderList() {
             <p onClick={() => navigate('/CustomerProfile')}>Profile</p><hr/>
             <p onClick={() => navigate('/')}>Home</p><hr/>
             <p onClick={() => navigate('/Cart')}>Cart</p><hr/>
-            <p>Order History</p><hr/>
+            <p onClick={() => navigate('/OrderHistoryList')}>Order History</p><hr/>
           </div>
           <p>LogOut</p>
         </div>
@@ -27,23 +30,26 @@ export function ActiveOrderList() {
             <span className='filter'>Filter By</span>
           </div>
           <div className='active-order'>
-            <GetActiveOrderProducts tracker={setTracker} date={setDate} />
+            <GetActiveOrderProducts tracker={setTracker} date={setDate} cancel={setConfirmCancellation} order={setOrderId} />
           </div>
         </div>
       </div> 
       {tracker && <OrderTracking tracker={setTracker} date={date} />}
+      {confirmCancellation && <ConfirmCancellation orderId={orderId} cancel={setConfirmCancellation} cancelled={setCancelled} />}
+      {cancelled && <OrderCancelled />}
     </>
   );
 }
 
-function GetActiveOrderProducts({ tracker, date }) {
-  const [products, setProducts] = useState([ {id:0, quantity:0, products:{}, date:''}]);
+function GetActiveOrderProducts({ tracker, date, cancel, order }) {
+  const [products, setProducts] = useState([ {id:0, quantity:0, products:{}, date:'', status:''}]);
 
   useEffect(() => {
     async function fetch() {
-      const output = await axios.get(`${api_url}`+'/order', {
+      const output = await axios.get(`${api_url}`+'/order/active', {
         params: {
-          username:'ajaykumar'
+          username:'ajaykumar',
+          page:0
         }
       });
       setProducts(output.data);
@@ -69,7 +75,7 @@ function GetActiveOrderProducts({ tracker, date }) {
                   </div>
                 <div className='order-buttons'>
                   <button>Buy Again</button>
-                  <button>Cancel Order</button>
+                  <button onClick={() => {cancel(true), order(product.id)}}>Cancel Order</button>
                 </div>
               </div>
               <div>
@@ -107,5 +113,48 @@ function OrderTracking({ tracker, date }) {
       </div>
       <button onClick={() => tracker(false)}>Close</button>
     </div>
+  );
+}
+
+function ConfirmCancellation({orderId, cancel, cancelled}) {
+ 
+  return (
+    <>
+      <div className='cancel-order'>
+        <h3>Do you want to cancel?</h3>
+        <div>
+          <button className='confirm-button' 
+          onClick={() =>{ CancelOrder(orderId, cancelled), cancel(false);  }}>
+            Confirm
+          </button>
+          <button className='cancel-button' onClick={() => cancel(false)}>Cancel</button>
+        </div>
+      </div>
+    </>
+  );
+}
+
+async function CancelOrder(orderId, cancelledOrder) {
+  try{
+    const cancelled = await axios.put(`${api_url}`+'/order/cancel/'+`${orderId}`);
+    if(cancelled.data) {
+      console.log(true);
+      cancelledOrder(true);
+      setTimeout(() => {cancelledOrder(false)}, 1500);
+    } else {
+      console.log(false);
+    }
+  } catch(e) {
+    console.log(e.message);
+  }
+}
+
+function OrderCancelled() {
+  return (
+    <>
+      <div className='order-cancelled'>
+        <h2>Order Cancelled</h2>
+      </div>
+    </>
   );
 }

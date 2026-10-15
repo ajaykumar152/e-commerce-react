@@ -9,7 +9,8 @@ import { ProductInfo } from './ProductInfo';
 import { CustomerProfile } from './CustomerProfile';
 import { ActiveOrders } from './CustomerProfile-ActiveOrders';
 import { OrderHistory } from './Customerprofile-OrderHistory';
-import { ActiveOrderList } from './ActiveOrders'
+import { ActiveOrderList } from './ActiveOrders';
+import { OrderHistoryList } from './OrderHistory';
 
 export function App() {
   return (
@@ -34,6 +35,7 @@ export function App() {
         <Route path='/CustomerProfile-ActiveOrders' element={<ActiveOrders />} />
         <Route path='/CustomerProfile-OrderHistory' element={<OrderHistory />} />
         <Route path='/ActiveOrderList' element={<ActiveOrderList />} />
+        <Route path="/OrderHistoryList" element={<OrderHistoryList />} />
       </Routes>
     </BrowserRouter>
     
