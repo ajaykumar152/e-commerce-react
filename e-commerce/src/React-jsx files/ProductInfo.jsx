@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { BuyProduct, PaymentOption, PayTypeUPI, PayTypeCard, PayTypeDelivery, OrderSucessfull } from './BuyProduct';
 import '../CSS files/productinfo.css';
@@ -14,6 +14,7 @@ export function ProductInfo() {
   const [payCard, setPayCard] = useState(false);
   const [payOnDelivery, setPayOnDelivery] = useState(false);
   const [orderPlaced, setOrderPlaced] = useState(false);
+  const [productId, setProductId] = useState('');
 
   return (
     <>
@@ -28,7 +29,7 @@ export function ProductInfo() {
           </div>
         </div>
         <div className='productinfo-box'>
-          <GetProductDesc buy={setBuy} />
+          <GetProductDesc buy={setBuy} id={setProductId} />
         </div>
         <h2>Products You May Like</h2>
         <div className='bottom-productlist'>
@@ -40,30 +41,28 @@ export function ProductInfo() {
       </div>
       { buy && <BuyProduct buy={setBuy} pay={setPay} />}
       { pay && <PaymentOption buy={setBuy} pay={setPay} payUPI={setPayUPI} payCard={setPayCard} payOnDelivery={setPayOnDelivery} /> }
-      { payUPI && <PayTypeUPI pay={setPay} payUPI={setPayUPI} orderPlaced={setOrderPlaced} />}
-      { payCard && <PayTypeCard pay={setPay} payCard={setPayCard} orderPlaced={setOrderPlaced} />}
-      { payOnDelivery &&  <PayTypeDelivery pay={setPay} payOnDelivery={setPayOnDelivery} orderPlaced={setOrderPlaced} /> }
+      { payUPI && <PayTypeUPI pay={setPay} payUPI={setPayUPI} orderPlaced={setOrderPlaced} productId={productId} />}
+      { payCard && <PayTypeCard pay={setPay} payCard={setPayCard} orderPlaced={setOrderPlaced} productId={productId} />}
+      { payOnDelivery &&  <PayTypeDelivery pay={setPay} payOnDelivery={setPayOnDelivery} orderPlaced={setOrderPlaced} productId={productId} /> }
       { orderPlaced && <OrderSucessfull orderPlaced={setOrderPlaced} />}
     </>
   );
 }
 
-function GetProductDesc({ buy }) {
+function GetProductDesc({ buy, id }) {
+  const { productId } = useParams();
   const [msg, setMsg] = useState(false);
-  const [info, setInfo] = useState(''); 
-  const product  = JSON.parse(localStorage.getItem('product'));
+  const [product, setProduct] = useState({id:'', productName:'', price:0.0, productType:'', 
+                                          productDescription:'', productLink:null
+                                        });
   const productDescription = 
   'A mobile phone or cell phone is a portable wireless telephone that allows users to make and receive calls over a radio frequency link while moving within a designated telephone service area, unlike fixed-location phones (landline phones). This radio frequency link connects to the switching systems of a mobile phone operator, providing access to the public switched telephone network (PSTN). Modern mobile telephony relies on a cellular network architecture, which is why mobile phones are often referred to as cell phones in North America.';
 
 
   useEffect(() => {
     async function fetch() {
-      const data = await axios.get(`${api_url}`+'/info', {
-        params: {
-          productId:product.id
-        }
-      });
-      setInfo(data.data.productDescription);
+      const response = await axios.get(`${api_url}`+'/product/info/'+`${productId}`);
+      setProduct(response.data);
     }
     fetch();
   });
@@ -78,12 +77,12 @@ function GetProductDesc({ buy }) {
         <div className='productdesc-sec'>
           <div>
             <h3>Product Description</h3>
-            {(info === 'null')? <p>{productDescription}</p> : <p>{info}</p>}
+            {(product.productDescription === null)? <p>{productDescription}</p> : <p>{product.productDescription}</p>}
           </div>
           {msg && <span className='added'>Added to cart</span>}
           <div className='info-buttons'>
             <button className='info-cart-button' onClick={() => AddToCartItems(product.id, setMsg)}>Add to Cart</button>
-            <button className='info-buy-button' onClick={() => {buy(true), localStorage.setItem('orderedProductId', product.id)}}>Buy</button>
+            <button className='info-buy-button' onClick={() => {buy(true), id(product.id)}}>Buy</button>
           </div>
         </div>
       </>
@@ -114,8 +113,8 @@ function GetProducts() {
 
   useEffect(() => {
     async function fetch() {
-      const data = await axios.get(`${api_url}`+'/info/products');
-      setProducts(data.data);
+      const response = await axios.get(`${api_url}`+'/product/list');
+      setProducts(response.data.content);
     }
     fetch();
   },[]);
@@ -129,17 +128,11 @@ function GetProducts() {
               <img src={product.productLink} />
               <span>{product.productName}</span>
               <span>${product.price}/-</span>
-              <button className='product-info-button' onClick={() => PageReLoad(product, navigate)}>ProductInfo</button>
+              <button className='product-info-button' onClick={() => navigate(`/productInfo/${product.id}`)}>ProductInfo</button>
             </div>
           );
         })
       }
     </>
   );
-}
-
-function PageReLoad(product, navigate) {
-  localStorage.removeItem('product');
-  localStorage.setItem('product', JSON.stringify(product));
-  navigate('/ProductInfo');
 }

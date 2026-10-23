@@ -5,7 +5,7 @@ import axios from 'axios';
 import { api_url } from './BackendApi';
 import tick from '../assets/tick-mark.jpg';
 
-export function BuyProduct({ buy, pay }) {
+export function BuyProduct({ buy, pay, productId }) {
   const [username, setUsername] = useState('');
   const [phone, setPhone] = useState('');
   const [town, setTown] = useState('');
@@ -79,21 +79,21 @@ function isValidDetails(username, phone, town, city, state, pincode, buy, pay) {
   }
 }
 
-export function PayTypeUPI({ pay, payUPI, orderPlaced, buyCart }) {
+export function PayTypeUPI({ pay, payUPI, orderPlaced, buyCart, productId }) {
 
   return(
     <div className='upi-pay'>
       <h3>Scan the QR and Pay</h3>
       <img src={QR} />
       <div>
-        <button className='buy-buttons' onClick={() => OrderProduct( payUPI, orderPlaced, buyCart)}>Order</button>
+        <button className='buy-buttons' onClick={() => OrderProduct( payUPI, orderPlaced, buyCart, productId)}>Order</button>
         <button className='buy-buttons' onClick={() => {pay(true), payUPI(false)}}>Cancel</button>
       </div>
     </div>
   );
 }
 
-export function PayTypeCard({ pay, payCard, orderPlaced }) {
+export function PayTypeCard({ pay, payCard, orderPlaced, productId }) {
 
   return (
     <div className='card-pay'>
@@ -108,31 +108,30 @@ export function PayTypeCard({ pay, payCard, orderPlaced }) {
       <input type="month" />
       <br />
       <div>
-        <button className='buy-buttons' onClick={() => OrderProduct(payCard, orderPlaced)}>Order</button>
+        <button className='buy-buttons' onClick={() => OrderProduct(payCard, orderPlaced, productId)}>Order</button>
         <button className='buy-buttons' onClick={() => {pay(true), payCard(false)}}>Cancel</button>
       </div>
     </div>
   );
 }
 
-export function PayTypeDelivery({ pay, payOnDelivery, orderPlaced }) {
+export function PayTypeDelivery({ pay, payOnDelivery, orderPlaced, productId }) {
 
   return (
     <div className='delivery-pay'>
       <h2>Order type</h2>
       <span>Pay on Delivery</span>
       <div className='buy-product-buttons'>
-        <button className='buy-buttons' onClick={() => OrderProduct(payOnDelivery, orderPlaced)}>Order</button>
+        <button className='buy-buttons' onClick={() => OrderProduct(payOnDelivery, orderPlaced, productId)}>Order</button>
         <button className='buy-buttons' onClick={() => {pay(true), payOnDelivery(false)}}>Cancel</button>
       </div>
     </div>
   );
 }
 
-async function OrderProduct(payOver, orderPlaced, buyCart) {
+async function OrderProduct(payOver, orderPlaced, productId, buyCart) {
   const userDetails = JSON.parse(localStorage.getItem('productUserDetails'));
-  const productId = localStorage.getItem('orderedProductId');
-  const quantity = localStorage.getItem('quantity');
+  const quantity = 1;
   const username = "ajaykumar";
 
   const body = {
@@ -160,7 +159,6 @@ async function OrderProduct(payOver, orderPlaced, buyCart) {
     if(data.data) {
       payOver(false);
       orderPlaced(true);
-      buyCart(false);
     }
   }
 }

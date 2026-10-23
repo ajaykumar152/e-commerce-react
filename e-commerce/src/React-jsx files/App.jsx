@@ -30,7 +30,7 @@ export function App() {
       <Routes>
         <Route path='/' element={<ProductsPage />} />
         <Route path='/Cart' element={<Cart />} />
-        <Route path='/ProductInfo' element={<ProductInfo />} />
+        <Route path='/ProductInfo/:productId' element={<ProductInfo />} />
         <Route path='/CustomerProfile' element={<CustomerProfile />} />
         <Route path='/CustomerProfile-ActiveOrders' element={<ActiveOrders />} />
         <Route path='/CustomerProfile-OrderHistory' element={<OrderHistory />} />

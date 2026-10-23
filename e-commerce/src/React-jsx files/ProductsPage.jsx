@@ -10,6 +10,7 @@ export function ProductsPage() {
   const [image, setImage] = useState(null);
   const [productname, setProductName] = useState("");
   const [productPrice, setProductPrice] = useState(0.0);
+  const [productDescription, setProductDescription] = useState('');
   const [buy, setBuy] = useState(false);
   const [pay, setPay] = useState(false);
   const [payUPI, setPayUPI] = useState(false);
@@ -17,6 +18,7 @@ export function ProductsPage() {
   const [payOnDelivery, setPayOnDelivery] = useState(false);
   const [orderPlaced, setOrderPlaced] = useState(false);
   const navigate = useNavigate();
+  const [productId, setProductId] = useState('');
 
   function UploadProductImage(event) {
     const file = event.target.files[0];
@@ -29,6 +31,10 @@ export function ProductsPage() {
 
   function ProductPrice(event) {
     setProductPrice(event.target.value);
+  }
+
+  function ProductDescription(event) {
+    setProductDescription(event.target.value);
   }
 
   return (
@@ -44,26 +50,27 @@ export function ProductsPage() {
           </div>
         </div>
         <div className='product-list'>
-          <GetAllProducts buy = {setBuy} />
+          <GetAllProducts buy = {setBuy} productId={setProductId} />
         </div>
         <div className='product-input'>
           <input type="file" onChange={UploadProductImage} />
           <input type='text' onChange={ProductName} />
           <input type='number' onChange={ProductPrice} />
-          <button onClick={() => AddProduct(image, productname, productPrice)} >UploadProduct</button>
+          <input type='text' onChange={ProductDescription} />
+          <button onClick={() => AddProduct(image, productname, productPrice, productDescription)} >UploadProduct</button>
         </div>
       </div>
       { buy && <BuyProduct buy = {setBuy} pay = {setPay} />}
       { pay && <PaymentOption buy = { setBuy } pay = {setPay} payUPI = {setPayUPI} payCard = {setPayCard} payOnDelivery={setPayOnDelivery} /> }
-      { payUPI && <PayTypeUPI pay={setPay} payUPI={setPayUPI} orderPlaced={setOrderPlaced} />}
-      { payCard && <PayTypeCard pay={setPay} payCard={setPayCard} orderPlaced={setOrderPlaced} />}
-      { payOnDelivery &&  <PayTypeDelivery pay={setPay} payOnDelivery={setPayOnDelivery} orderPlaced={setOrderPlaced} /> }
+      { payUPI && <PayTypeUPI pay={setPay} payUPI={setPayUPI} orderPlaced={setOrderPlaced} productId={productId} />}
+      { payCard && <PayTypeCard pay={setPay} payCard={setPayCard} orderPlaced={setOrderPlaced} productId={productId} />}
+      { payOnDelivery &&  <PayTypeDelivery pay={setPay} payOnDelivery={setPayOnDelivery} orderPlaced={setOrderPlaced} productId={productId} /> }
       { orderPlaced && <OrderSucessfull orderPlaced={setOrderPlaced} />}
     </>
   );
 }
 
-function GetAllProducts({ buy }) {
+function GetAllProducts({ buy, productId }) {
   const navigate = useNavigate();
   const[products, setProducts] = useState([]);
   
@@ -100,8 +107,8 @@ function GetAllProducts({ buy }) {
               <span>{product.productName}</span>
               <span>${product.price}\-</span>
               <div className='productpage-buttons'>
-                <button className='productinfo-button' onClick={() => ProductDesc(product, navigate)}>ProductInfo</button>
-                <button className='buy-button' onClick={() => StoreDetails(buy, product.id)}>Buy</button>
+                <button className='productinfo-button' onClick={() => navigate(`/productInfo/${product.id}`)}>ProductInfo</button>
+                <button className='buy-button' onClick={() => {buy(true); productId(product.id)}}>Buy</button>
               </div>
             </div>);
           })
@@ -110,30 +117,19 @@ function GetAllProducts({ buy }) {
     }
   }
 
-function StoreDetails(buy, id) {
-  localStorage.setItem('orderedProductId', id);
-  localStorage.setItem('quantity', JSON.stringify(1));
-  buy(true);
-}
-
-async function AddProduct(image, productName, productPrice) {
+async function AddProduct(image, productName, productPrice, description) {
   
   const formData = new FormData();
 
   formData.append("price", productPrice);
   formData.append("name", productName);
   formData.append("image", image);
+  formData.append("description", description);
 
   try {
-    await axios.post( `${api_url}`+"/product", formData);
+    await axios.post( `${api_url}`+"/product", {'formData':formData});
   } catch {
     console.log("not added");
   }
-}
-
-function ProductDesc(product, navigate) {
-  localStorage.removeItem('product');
-  localStorage.setItem('product', JSON.stringify(product));
-  navigate('/ProductInfo');
 }
 

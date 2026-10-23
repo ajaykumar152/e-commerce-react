@@ -54,7 +54,7 @@ function GetCartProducts({ buy, buyCart }) {
   useEffect(() => { 
     try {
       async function fetch() {
-        const response = await axios.get(`${api_url}`+'/products', { 
+        const response = await axios.get(`${api_url}`+'/cart/products', { 
           params: {
             user:"ajaykumar",
             page:0,
